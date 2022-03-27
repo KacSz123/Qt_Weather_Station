@@ -6,16 +6,10 @@ MainQW::MainQW(QWidget *parent) : QWidget(parent)
     wTimer=new QTimer(this);
     wTimer->setObjectName("Timer");
 
-   // tlo.load("C:/Users/kacpe/Desktop/Qt/WDS2/WDS/img/main.png");
 
-    //drop.load("C:/Users/kacpe/Desktop/Qt/WDS2/WDS/img/drop.png");
-    //ray.load("C:/Users/kacpe/Desktop/Qt/WDS2/WDS/img/ray.png");
-
-
-    //  qDebug()<<"test1 cococ  "<<tlo.isNull();
 
     this->setStyleSheet("background-color: Blue");
-    // p.setBackground(Qt::blue);
+
 
     connect(wTimer,SIGNAL(timeout()), this, SLOT(on_Timer_timeout()));
 }
@@ -183,8 +177,8 @@ void MainQW :: AnimateRain(QPainter *paint)
         paint->drawImage(drop_x-150, drop_y, *drop);
 
         paint->drawImage(drop_x, drop_y2, *drop);
-        paint->drawImage(drop_x+130, drop_y2, *drop);
-        paint->drawImage(drop_x-170, drop_y2, *drop);
+        //paint->drawImage(drop_x+130, drop_y2, *drop);
+       // paint->drawImage(drop_x-170, drop_y2, *drop);
 
 
         //  paint->drawImage(drop_x, drop_y3, drop);
@@ -192,7 +186,7 @@ void MainQW :: AnimateRain(QPainter *paint)
         paint->drawImage(drop_x-240, drop_y3,* drop);
 
         //p2.setBackground(Qt::blue);
-        qDebug()<<"test1  "<<Rain_lvl;
+       // qDebug()<<"test1  "<<Rain_lvl;
     }
     else if(Rain_lvl==2)
     {
@@ -213,7 +207,7 @@ void MainQW :: AnimateRain(QPainter *paint)
         paint->drawImage(drop_x-160, drop_y3, *drop);
 
         //p2.setBackground(Qt::blue);
-        qDebug()<<"test1  "<<Rain_lvl;
+       // qDebug()<<"test1  "<<Rain_lvl;
     }
     else if(Rain_lvl==3)
     {
@@ -235,10 +229,6 @@ void MainQW :: AnimateRain(QPainter *paint)
         paint->drawImage(drop_x-80, drop_y3, *drop);
         paint->drawImage(drop_x+250, drop_y3, *drop);
         paint->drawImage(drop_x-200, drop_y3, *drop);
-    }
-    else
-    {
-        //p2.drawImage(300, 50, drop);
     }
 
 }

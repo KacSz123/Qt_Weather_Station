@@ -1,5 +1,5 @@
 #include "CRC8.h"
-
+#include "QDebug"
 
 unsigned int CRC8_SingleByte( unsigned int Data2 )
 {
@@ -16,7 +16,8 @@ unsigned int CRC8_SingleByte( unsigned int Data2 )
 
 unsigned char CRC8_DataArray( const unsigned char *pDataFrame, unsigned char Len )
 {
-    // cout << " Obliczanie dla ramki (" << static_cast<int>(Len) << "): " << pDataFrame << endl;
+
+    //cout << " Obliczanie dla ramki (" << static_cast<int>(Len) << "): " << pDataFrame << endl;
     unsigned int Data2 = pDataFrame[0] << 8;
 
     for ( unsigned int Idx = 1; Idx < Len; ++Idx ) {
@@ -24,6 +25,7 @@ unsigned char CRC8_DataArray( const unsigned char *pDataFrame, unsigned char Len
         Data2 = CRC8_SingleByte(Data2);
     }
     Data2 = CRC8_SingleByte( Data2 );
+
     return static_cast<unsigned char>(Data2 >>8);
 }
 
@@ -34,13 +36,17 @@ unsigned char CRC8_DataArray( const unsigned char *pDataFrame, unsigned char Len
 
 bool ParseDataFrame( const char *pDataFrame, int &Temp, int &Press, int &Rain , int &Light )
 {
+
     std::istringstream IStrm(pDataFrame);
+    std::ostringstream OStrm(std::ostringstream::ate);
     char  FHeader;
     unsigned int CRC8;
 
     IStrm >> FHeader >> Temp >> Press >>  Rain >> Light >> hex >> CRC8;
+    OStrm <<"A "<< Temp<<" " << Press<<" " <<  Rain <<" " << Light;
     if (IStrm.fail() || FHeader != 'A' ) return false;
-    return static_cast<unsigned char>(CRC8) == CRC8_DataArray(pDataFrame,strlen(pDataFrame)-3);
+
+    return static_cast<unsigned char>(CRC8) == CRC8_DataArray(OStrm.str().c_str(), strlen(OStrm.str().c_str()));
 }
 
 

@@ -109,8 +109,11 @@ void Connect_window::readFromPort() {
 
         this->DF->ParseData(line.toStdString());
         //DF->display_DataFrame();
+        if(DF->Read)
+        {
         sendData();
         sendDataToPlot();
+        }
     }
 }
 

@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    /// inicjalizacja
     this->setWindowFlags(Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
     ui->setupUi(this);
     nw=new Connect_window(this);
@@ -26,15 +27,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->DataFrame->setStyleSheet("font-weight: bold;background-color:rgb(245,245,245)");
 
     ///sekcja rysowania bitmap
-
-
     //wywolanie timera dla srodkowego okna
-
     ui->Label_pic_main->drawDrops();
+    //wywolanie timera dla termometru
     ui->Therm->startTimer();
+    //wywolanie timera dla barometru
     ui->Barom->startTimer();
-
-
 
     ///sekcja ustawien qlabel z wypisanymi danymi
     ui->LabelT->setAlignment(Qt::AlignCenter | Qt::AlignCenter);
@@ -42,26 +40,19 @@ MainWindow::MainWindow(QWidget *parent)
     ui->LabelR->setAlignment(Qt::AlignCenter | Qt::AlignCenter);
     ui->LabelP->setAlignment(Qt::AlignCenter | Qt::AlignCenter);
 
-
     ///sekcja polaczen miedzy oknami
-
     //ustawienie polaczenia Connect_Window-->MainWindow
     QObject::connect(nw, SIGNAL(sendMsg(int, int, int, int)), this, SLOT(receiveMsg(int, int, int ,int )));
     //ustawienie polaczenia Connect_Window-->Diagrams
     QObject::connect(nw, SIGNAL(sendMsg(int, int, int, int)), Dg, SLOT(getData(int, int ,int, int)));
 
-
-
-
 }
 
 MainWindow::~MainWindow()
 {
-
     delete ui;
     delete nw;
     delete Dg;
-
 }
 
 
@@ -82,7 +73,6 @@ void MainWindow::receiveMsg(int Temp1, int Press1, int Rain1, int Light1)
     ui->Barom->setPress(Press);
     ui->Label_pic_main->setRainLvl(Rain);
     ui->Label_pic_main->setLightLvl(Light);
-
 }
 
 
@@ -108,20 +98,19 @@ void MainWindow::on_actionWyjd_triggered()
     nw->close();
     Dg->close();
     this->close();
-
 }
 
 
-void MainWindow::closeEvent(QCloseEvent* e)  {
+void MainWindow::closeEvent(QCloseEvent* e)
+{
+    QMessageBox::StandardButton resBtn = QMessageBox::question( this, "Leaving :(",
+         tr("It is over? :o\n"), QMessageBox::No | QMessageBox::Yes, QMessageBox::No);
 
-
-    QMessageBox::StandardButton resBtn = QMessageBox::question( this, ":(",
-                                                                tr("Czy chcesz wyjść?\n"),
-                                                                QMessageBox::No | QMessageBox::Yes,
-                                                                QMessageBox::No);
-    if (resBtn != QMessageBox::Yes) {
+    if (resBtn != QMessageBox::Yes)
+    {
         e->ignore();
-    } else {
+    } else
+    {
         nw->close();
         Dg->close();
         e->accept();

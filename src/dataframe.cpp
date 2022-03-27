@@ -6,11 +6,16 @@ DataFrame :: DataFrame()
     Pressure=0;
     Rain=0;
     LightIntensity=0;
+    Read=false;
 
 };
 DataFrame :: DataFrame(string Data)
 {
-
+    std::istringstream IStrm(Data);
+    char a;
+    IStrm>>a;
+    if((a)=='A')
+    IStrm>>Temp>>Pressure>>Rain>>LightIntensity;
 }
 
 
@@ -34,7 +39,8 @@ int DataFrame :: returnLight()
 
 void DataFrame ::  ParseData(string Data)
 {
-    ParseDataFrame(Data,Temp,Pressure, Rain, LightIntensity);
+    Read=ParseDataFrame(Data,Temp,Pressure, Rain, LightIntensity);
+  // qDebug() << Read;
 }
 
 

@@ -55,6 +55,8 @@ public:
     int Temp=0;
     //string pDataFrame;
 
+    bool Read;
+
 public:
     /*!
      * \brief Konstruktor bezparametryczny
