@@ -1,9 +1,11 @@
 #include "diagrams.h"
 #include "ui_diagrams.h"
 
+#include <QDateTime>
 #include <QWidget>
 #include <QDebug>
 #include <QDialog>
+#include <QTime>
 Diagrams::Diagrams(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Diagrams)
@@ -92,10 +94,11 @@ Diagrams::~Diagrams()
 
 void Diagrams::getData(int Temp, int Press, int Rain, int Light)
 {
+    Time =static_cast<double>(QTime::currentTime().msecsSinceStartOfDay()/1000);
 
-    Time+=static_cast<double> (50.0/1000);
+
     ui->TempPlot->graph(0)->addData(Time, (double)(Temp/10.0));
-    ui->TempPlot->xAxis->setRange(Time, 1000, Qt::AlignRight);
+    ui->TempPlot->xAxis->setRange(Time, 5000, Qt::AlignRight);
     ui->TempPlot->replot();
     ui->TempPlot->update();
     ui->label->setNum((double)(Temp/10.0));
@@ -108,7 +111,7 @@ void Diagrams::getData(int Temp, int Press, int Rain, int Light)
     ui->label_2->setNum(Press);
 
     ui->RainPlot->graph(0)->addData(Time, (double)((1025-Rain)/1000.0)*100.0);
-    ui->RainPlot->xAxis->setRange(Time, 100, Qt::AlignRight);
+    ui->RainPlot->xAxis->setRange(Time, 1000, Qt::AlignRight);
     ui->RainPlot->replot();
     ui->RainPlot->update();
     ui->label_3->setNum((double)((1025-Rain)/1000.0)*100.0);
@@ -116,7 +119,7 @@ void Diagrams::getData(int Temp, int Press, int Rain, int Light)
     //Light=(double)((Light)/1000.0)*100.0;
     //qDebug()<<"light  "<<Light<<"\n";
     ui->LightPlot->graph(0)->addData(Time, (double)((Light)/1000.0)*100.0);
-    ui->LightPlot->xAxis->setRange(Time, 100, Qt::AlignRight);
+    ui->LightPlot->xAxis->setRange(Time, 1000, Qt::AlignRight);
     ui->LightPlot->replot();
     ui->LightPlot->update();
     ui->label_4->setNum((double)((Light)/1000.0)*100.0);

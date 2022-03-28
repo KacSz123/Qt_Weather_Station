@@ -13,7 +13,6 @@ Connect_window::Connect_window(QWidget *parent) :
     this->device =new QSerialPort;
     DF=new DataFrame;
 
-
 }
 
 Connect_window::~Connect_window()
@@ -24,8 +23,6 @@ Connect_window::~Connect_window()
 
 void Connect_window::on_pushButtonSearch_clicked()
 {
-
-
     this->addToLogs("Szukam urządzeń...");
 
     QList<QSerialPortInfo> devices;
@@ -75,16 +72,16 @@ void Connect_window::on_pushButtonConnect_clicked()
             connect(this->device, SIGNAL(readyRead()),
                     this, SLOT(readFromPort()));
 
-            this->addToLogs("Otwarto port szeregowy.");
+            this->addToLogs("A serial port has been opened!");
         }
         else
         {
-            this->addToLogs("Otwarcie portu szeregowego się nie powiodło!");
+            this->addToLogs("Opening the serial port has failed!");
         }
     }
     else
     {
-        this->addToLogs("Port już jest otwarty!");
+        this->addToLogs("The port is already open!");
         return;
     }
 }
@@ -93,9 +90,9 @@ void Connect_window::on_pushButtonDisc_clicked()
 {
     if(this->device->isOpen()) {
         this->device->close();
-        this->addToLogs("Zamknięto połączenie.");
+        this->addToLogs("Connection closed!");
     } else {
-        this->addToLogs("Port nie jest otwarty!");
+        this->addToLogs("Port is open!");
         return;
     }}
 void Connect_window::readFromPort() {
@@ -111,17 +108,20 @@ void Connect_window::readFromPort() {
         //DF->display_DataFrame();
         if(DF->Read)
         {
-        sendData();
-        sendDataToPlot();
+            sendData();
+            sendDataToPlot();
         }
+        else
+            this->addToLogs("Corrupted data was ignored");
+
     }
 }
 
 void Connect_window::sendMessageToDevice(QString message) {
     if(this->device->isOpen() && this->device->isWritable()) {
-        this->addToLogs("Wysyłam informacje do urządzenia " + message);
+        this->addToLogs("Sending message to device!" + message);
         this->device->write(message.toStdString().c_str());
     } else {
-        this->addToLogs("Nie mogę wysłać wiadomości. Port nie jest otwarty!");
+        this->addToLogs("Cannot send the message. A serial port hasn't been opened!");
     }
 }

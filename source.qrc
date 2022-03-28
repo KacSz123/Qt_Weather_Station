@@ -3,11 +3,9 @@
         <file>img/exit.png</file>
         <file>img/chart.png</file>
         <file>img/connect.png</file>
-
         <file>img/ray.png</file>
         <file>img/drop.png</file>
         <file>img/main.png</file>
-
         <file>img/bar2.png</file>
         <file>img/Thermometer.png</file>
     </qresource>
