@@ -1,14 +1,27 @@
 
 ## <p align="center">WEATHER STATION: ATmega328p code</p>
 
-# <p>**Requirements**</p>
-<p>
+# <p> Description: 
+</p>
+<p>simple library for weather station based on ATmega328p in <b>C</b>.
+
+ <ul>
+<b> Peripherals: </b>
+
+<p> Required:</p>
+ <li>ADC</li>
+ <li>USART</li>
+ <li>I2C</li>
+ 
+ Optional:
+ <li></li>
+ <li></li>
+ </ul>
+ </p>
+
+# <p>**Requirements**
 <ul>
         <li> avr-gcc ver. 5.4.0</li>    
         <li> gcc ver. 9.4.0</li>    
         
-</ul>
-<p>
-## <p>Ver. 0.8 </p>
-<p>of library for simple weather station based on 
-</p>
+</ul> </p>
