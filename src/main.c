@@ -1,26 +1,26 @@
+/*!
+ * @file main.c
+ * @author {Kacper Szczepanowski} ({kacperszcz159@gmail.com})
+ * @brief 
+ * @version 0.8
+ * @date 2023-11-10
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
+//avr includes
+#include<avr/io.h>		// Contains all the I/O Register Macros
+#include<util/delay.h> // Generates a Blocking Delay
 
-#include <avr/io.h>		// Contains all the I/O Register Macros
-#include <util/delay.h> // Generates a Blocking Delay
-#include <string.h>
-#include <stdio.h>
-#include<stdint-gcc.h>
-#include <math.h>
-// #include<memory.h>
-#include<stdlib.h>
-
+//ws include
 #include "weather_station.h"
-#define USART_BAUDRATE 9600 // Desired Baud Rate
+
 // #define BAUD_PRESCALER (((F_CPU / (USART_BAUDRATE * 16UL))) - 1)
 
-#define BUILD_IN_LED_PORT PORTB=0b00010000
-#define BUILD_IN_LED PB5
-#define LED_TOGGLE(X) PORTD^=(1<<(X))
-#define BUILDIN_LED_TOGGLE LED_TOGGLE(BUILD_IN_LED)
-
-
+#define USART_BAUDRATE 9600 // Desired Baud Rate
 
 #ifdef F_CPU
-#define F_CPU 16000000UL  
+#define F_CPU 16000000UL
 #endif
 
 ///////////////////////////////////////////////////////////////
@@ -33,17 +33,15 @@ int main()
 	processedData processData;
 	char str[50];
 
-
 	WEATHER_STATION_init(&newWS, 9600);
 	_delay_ms(200);
 
 	while (1)
 	{
-	collectData(&newWS, &processData);
-	_delay_ms(3000);
-	sendWeatherData(WEATHER_STATION_createStr(&processData,str));
-	_delay_ms(200);
-
+		collectData(&newWS, &processData);
+		_delay_ms(3000);
+		sendWeatherData(WEATHER_STATION_createStr(&processData, str));
+		_delay_ms(200);
 	}
 	return 0;
 }

@@ -40,17 +40,35 @@
  * @param usart_baud 
  */
 void USART_Init(unsigned long usart_baud);
-// #define KURWA "KURWA"
 
+/*!
+ * @brief Transmit 1byte with USART
+ * 
+ * @param byte 
+ */
 void USART_TransmitByte(uint8_t byte);
 
-
+/*!
+ * @brief Transmit array of bytes with USART
+ * 
+ * @param[in] msg data
+ */
 void USART_TransmitString(uint8_t *msg);
 
 
+/*!
+ * @brief Receive 1byte with USART
+ * 
+ * @param byte data
+ */
 uint8_t USART_ReceiveByte();
 
 
+/*!
+ * @brief Receive array of bytes with USART
+ * 
+ * @param[in] msg data
+ */
 uint8_t* USART_ReceiveString();
 
 

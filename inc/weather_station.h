@@ -75,20 +75,31 @@ typedef struct processedData
 }processedData;
 
 
-
+/*!
+ * @brief Initiation of WEATHER STATION.
+ * 
+ * Inits ADC, I2C, UART.
+ * 
+ * @param[out] data pointer to rawData structure
+ * @param[in] usart_baudrate Baudrate value for USART
+ */
 void WEATHER_STATION_init(rawData* data, unsigned long usart_baudrate);
 
 
 
-
+/*!
+ * @brief Collecting data from weather station
+ * 
+ * Collecting all 4 data from WS.
+ * 
+ * @param[out] data Raw data
+ * @param[out] prData  Processed data - ready to send
+ */
 void collectData(rawData* data, processedData* prData);
 
 
 
 
-
-
-void processData(const rawData rawD, processedData* prData);
 
 /*!
  * @brief Create a Data String object from data
@@ -102,15 +113,19 @@ char*  WEATHER_STATION_createStr(const processedData* dataToSend, char* msg);
 
 
 /*!
- * @brief 
+ * @brief Simple CRC8 computation.
  * 
- * @param data 
- * @param len 
- * @param poly 
+ * @param[in] data - string 
+ * @param[in] len - len of data
+ * @param[in] poly - polynomial to divide by.
  * @return uint8_t 
  */
 uint8_t crc8_simple(const uint8_t* data, size_t len, uint8_t poly);
 
-
+/*!
+ * @brief Sending string with uart.
+ * 
+ * @param dataStr 
+ */
 void sendWeatherData(char* dataStr);
 #endif//__WEATHER_STATION_H

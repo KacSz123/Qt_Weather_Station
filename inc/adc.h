@@ -23,6 +23,18 @@
 // Nbit conv
 #define CONV_10B (0 << ADLAR)
 #define CONV_8B (1 << ADLAR)
+
+/*!
+ * @brief simple ADC 10bit init
+ * 
+ */
 void ADC_init();
+
+/*!
+ * @brief 
+ * 
+ * @param[in] PIN one of {A0, A1, A2, A3, A4};
+ * @return uint16_t Measured value.
+ */
 uint16_t ADC_takeMeasure(const uint8_t PIN);
 #endif //__ADC_H__
