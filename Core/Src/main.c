@@ -101,7 +101,7 @@ int main(void)
   MX_I2C1_Init();
   MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
-//  params.t_fine = 100;
+
   HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
   BMP280_init(BMP280_TEMP_16b, BMP280_PRESS_STANDARD, BMP280_MODE_FORCED);
 
@@ -116,7 +116,8 @@ int main(void)
 	  WS_createStr(&hwsdata, msg);
 	  printf("%s", msg);
 	  HAL_Delay(1000);
-//	  printf("1\r\n");
+
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

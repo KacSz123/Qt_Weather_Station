@@ -11,6 +11,10 @@
 //#include "stm32l4xx.h"
 #include "i2c.h"
 
+enum{BMP280 = -28, BMP180=-18};
+
+#define SENSOR BMP280
+#if(SENSOR==BMP280)
 #define BMP280_TEMP_XLSB 0xFC
 #define BMP280_TEMP_LSB 0xFB
 #define BMP280_TEMP_MSB 0xFA
@@ -43,13 +47,16 @@
 #define BMP280_DIG_P9 0x9E
 
 #define BMP280_ADDR_SLAVE 0xEC
-
+#endif
 
 
 
 
 // FILTER
-
+/*!
+ * @brief BMP280 filter setting typedef
+ * 
+ */
 typedef enum{
 	BMP280_FILTER_OFF = 0,
 	BMP280_FILTER_X2 =  1,
@@ -70,10 +77,13 @@ typedef enum{
 //#define BMP280_PRESS_LOW	   2
 //#define BMP280_PRESS_STANDARD  3
 //#define BMP280_PRESS_HIGH      4
-//#define BMP280_PRESS_ULTRAHIGH 5
+//#define BMP280sensor_Typedef_PRESS_ULTRAHIGH 5
 
 // standby time
-
+/*!
+ * @brief BMP280 standby time setting typedef
+ * 
+ */
 typedef enum{
 	BMP280_STANDBY_0_5_MS	= 0,
 	BMP280_STANDBY_65_5_MS	= 1,
@@ -85,6 +95,10 @@ typedef enum{
 	BMP280_STANDBY_4000_MS	= 7
 }BMP280_StandbyTypedef;
 
+/*!
+ * @brief BMP280 pressure oversampling setting typedef
+ * 
+ */
 typedef enum{
 	BMP280_PRESS_ULTRALOW=1,
 	BMP280_PRESS_LOW=2,
@@ -93,6 +107,10 @@ typedef enum{
 	BMP280_PRESS_ULTRAHIGH = 5
 }BMP280_PressureOversamplingTypedef;
 
+/*!
+ * @brief BMP280 temperature resolution setting typedef
+ * 
+ */
 typedef enum {
 	BMP280_TEMP_16b = 1,
 	BMP280_TEMP_17b = 2,
@@ -103,6 +121,10 @@ typedef enum {
 
 
 // MODES
+/*!
+ * @brief BMP280 mode setting typedef
+ * 
+ */
 typedef enum{
 BMP280_MODE_SLEEP  = 0,
 BMP280_MODE_FORCED = 1,  // OR 2    01/10
@@ -111,6 +133,13 @@ BMP280_MODE_NORMAL = 3
 
 //#define BMP280_TW
 
+
+/*!
+ * @brief BMP280 fcompensation parameter typedef.
+ * 
+ * Compensation parameter structure which is 
+ * used for calculation of final values of temperature and pressure.
+ */
 typedef struct BMP280_CompensationParameters
 {
 	uint16_t T1;
@@ -136,12 +165,20 @@ typedef struct BMP280_CompensationParameters
 
 }BMP280_CompensationParametersType;
 
+// local instance of  BMP280_CompensationParametersType.
 BMP280_CompensationParametersType params;
 #define BMP280_S32_t int32_t
 #define BMP280_US32_t uint32_t
 
 int32_t BMP280_compensateTemp(int32_t adc_T);
 
+
+/*!
+ * @brief returns values from register.
+ * 
+ * @param[in] addr - address in memory
+ * @return uint8_t - Value of register.
+ */
 uint8_t BMP280_read8b(uint8_t addr);
 void BMP280_write8b(uint8_t addr, uint8_t data);
 
@@ -167,18 +204,69 @@ uint16_t BMP280_read16LM(uint8_t addr);
  */
 uint16_t BMP280_read16ML(uint8_t addr);
 
-
+/*! @brief Reading 16b data in  order: MSB, LSB...
+ *
+ * Function created for reading compensation data which is
+ * stored in memory with LE.
+ *
+ * @param[in] addr Adress in i2c device.
+ *
+ * @return read data in  little endian
+ */
 uint32_t BMP280_read24ML(uint8_t addr);
+
+/*!
+ * @brief Set configuration in BMP280.
+ * 
+ * @param[in] standby 
+ * @param[in] filter 
+ */
 void BMP280_setConfig(BMP280_StandbyTypedef standby, BMP280_FilterTypedef filter);
+
+/*!
+ * @brief BMP280 init function
+ * 
+ * Initialization of BMP280 using i2c and setting it into (for now only FORCED) mode.
+ * 
+ * @param[in] pressOversampling - pressure oversampling setting value
+ * @param[in] tempResolution - temperature resolution setting value
+ * @param[in] mode - mode setting value
+ */
 void BMP280_init(BMP280_PressureOversamplingTypedef pressOversampling,
 				BMP280_TempResolutrionTypedef tempResolution,
 				BMP280_ModeTypedef mode);
 
-
+/*!
+ * @brief Gets Temperature value from BMP280.
+ * 
+ * Return temperature if succesfull, otherwise -99.
+ * 
+ * @return int32_t [C * 10]
+ */
 int32_t BMP280_readTemperature();
+
+
+/*!
+ * @brief Gets pressure value from BMP280.
+ * 
+ * Return pressure if succesfull,otherwise -999.
+ * 
+ * @return int32_t hPa. 
+ */
 int32_t BMP280_readPressure();
 
-
+/*!
+ * @brief Reading temperature and pressure from BMP280.
+ * 
+ * Reading temp and pressure and store it in pointers from parameters.
+ * 
+ * If succeded: temp is in C*10, pressure hPa
+ * Otherwise: temp = -99, presure=-999.
+ * 
+ * 
+ * @param[out] temp 
+ * @param[out] pressure 
+ */
 void BMP280_readTempAndPressure(int32_t* temp, int32_t *pressure);
 
 #endif /* INC_BMPX80_H_ */

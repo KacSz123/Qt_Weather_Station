@@ -17,6 +17,8 @@ typedef struct WS_DataTypedef
     int32_t _procLuminosity;
 }WS_DataTypedef;
 
+
+#if(SENSOR==BMP180)
 typedef struct WS_RawDataTypedef
 {
     uint32_t T;
@@ -24,7 +26,7 @@ typedef struct WS_RawDataTypedef
     uint32_t R;
     uint32_t L;
 }WS_RawDataTypedef;
-
+#endif
 
 //void WS_init(rawData* data);
 

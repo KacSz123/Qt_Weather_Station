@@ -11,6 +11,7 @@
 #include "adc.h"
 #include "string.h"
 #include "stdio.h"
+
 //void WS_init(rawData* data, unsigned long usart_baudrate)
 //{
 //    USART_Init(usart_baudrate);
@@ -57,14 +58,14 @@ uint8_t crc8_simple(const uint8_t* data, size_t len, uint8_t poly)
 char*  WS_createStr(WS_DataTypedef* prData, char* msg)
 {
 
-//	char tmp[50];
-    sprintf(msg, "A %ld %ld %ld %ld", prData->_procTemperature, prData->_procPressure,
+	char tmp[50];
+    sprintf(tmp, "A %ld %ld %ld %ld", prData->_procTemperature, prData->_procPressure,
     		prData->_procRainFall, prData->_procLuminosity);
 
 
     uint8_t crc=crc8_simple((uint8_t*)msg,strlen(msg), 0x07);
 
-    sprintf(msg,"%s %X\r\n", msg, crc);
+    sprintf(msg,"%s %X\r\n", tmp, crc);
     return msg;
 }
 
