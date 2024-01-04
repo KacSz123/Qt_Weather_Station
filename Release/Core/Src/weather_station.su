@@ -1,0 +1,3 @@
+weather_station.c:24:6:WS_collectData	16	static
+weather_station.c:40:9:crc8_simple	12	static
+weather_station.c:58:8:WS_createStr	72	static

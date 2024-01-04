@@ -1,0 +1,11 @@
+bmpX80.c:12:9:BMP280_compensateTemp	0	static
+bmpX80.c:27:9:BMP280_read8b	32	static
+bmpX80.c:35:6:BMP280_write8b	32	static
+bmpX80.c:51:10:BMP280_read16LM	32	static
+bmpX80.c:76:10:BMP280_read16ML	32	static
+bmpX80.c:87:10:BMP280_read24ML	32	static
+bmpX80.c:94:6:BMP280_setConfig	0	static
+bmpX80.c:99:6:BMP280_init	8	static
+bmpX80.c:145:9:BMP280_readTemperature	8	static
+bmpX80.c:179:9:BMP280_readPressure	32	static
+bmpX80.c:212:6:BMP280_readTempAndPressure	48	static
